@@ -111,8 +111,8 @@ class DeepQNetwork:
         diag_idx = T.tile(T.arange(self.num_actuators), batch_size)
         b = T.set_subtensor(a[batch_idx, diag_idx, diag_idx], T.flatten(T.exp(x[:, :self.num_actuators])))
         # set lower triangle
-        cols = np.concatenate([np.array(range(i), dtype=np.uint) for i in xrange(self.num_actuators)])
-        rows = np.concatenate([np.array([i]*i, dtype=np.uint) for i in xrange(self.num_actuators)])
+        cols = np.concatenate([np.array(list(range(i)), dtype=np.uint) for i in range(self.num_actuators)])
+        rows = np.concatenate([np.array([i]*i, dtype=np.uint) for i in range(self.num_actuators)])
         cols_idx = T.tile(T.as_tensor_variable(cols), batch_size)
         rows_idx = T.tile(T.as_tensor_variable(rows), batch_size)
         batch_idx = T.extra_ops.repeat(T.arange(batch_size), len(cols))
@@ -137,7 +137,7 @@ class DeepQNetwork:
       h = BatchNormalization()(x)
     else:
       h = x
-    for i in xrange(args.hidden_layers):
+    for i in range(args.hidden_layers):
       h = Dense(args.hidden_nodes, activation=args.activation, name='h'+str(i+1),
           W_constraint=W_constraint, W_regularizer=W_regularizer)(h)
       if args.batch_norm and i != args.hidden_layers - 1:
@@ -174,7 +174,7 @@ class DeepQNetwork:
     # copy weights to target model, averaged by tau
     weights = self.model.get_weights()
     target_weights = self.target_model.get_weights()
-    for i in xrange(len(weights)):
+    for i in range(len(weights)):
       target_weights[i] = self.target_rate * weights[i] + (1 - self.target_rate) * target_weights[i]
     self.target_model.set_weights(target_weights)
 

@@ -130,7 +130,7 @@ class Driver(object):
 
         # training
         if self.enable_training and self.mem.count > 0:
-          for i in xrange(self.repeat_train):
+          for i in range(self.repeat_train):
             minibatch = self.mem.getMinibatch(self.minibatch_size)
             self.loss_sum += self.net.train(minibatch)
             self.loss_steps += 1
@@ -160,7 +160,7 @@ class Driver(object):
             self.control.setMeta(0)
 
         action, Q = self.net.predict(state)
-        print "action:", action, "Q-values:", Q
+        print("action:", action, "Q-values:", Q)
         self.maxQ_sum += np.max(Q)
         self.maxQ_steps += 1
         if self.learn == 'both':
@@ -247,8 +247,8 @@ class Driver(object):
             self.loss_sum = self.loss_steps = 0
             avgmaxQ = self.maxQ_sum / max(self.maxQ_steps, 1)
             self.maxQ_sum = self.maxQ_steps = 0
-            print "Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
-                "\tReplay memory:", self.mem.count, "\tAverage loss:", avgloss, "\tAverage maxQ", avgmaxQ 
+            print("Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
+                "\tReplay memory:", self.mem.count, "\tAverage loss:", avgloss, "\tAverage maxQ", avgmaxQ) 
 
             if self.save_weights_prefix and self.save_interval > 0 and self.episode % self.save_interval == 0:
                 self.net.save_weights(self.save_weights_prefix + "_" + str(self.episode) + ".pkl")

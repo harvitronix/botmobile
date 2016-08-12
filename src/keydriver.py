@@ -40,7 +40,7 @@ class Driver(object):
         self.stats = sensorstats.Stats(inevery=8)
         # need to reposition right down
         self.angles = [-90 + x * 10 for x in range(19)]
-        print self.angles 
+        print(self.angles) 
         
         return self.parser.stringify({'init': self.angles})
     

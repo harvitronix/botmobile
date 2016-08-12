@@ -20,7 +20,7 @@ class CSVLogger(object):
 
     def to_csv_dict(self, state):
         ret = {}
-        for k, val in state.items():
+        for k, val in list(state.items()):
             if k == 'sensors' or k == 'parser':
                 continue
             if type(val) == list:
@@ -39,7 +39,7 @@ class CSVLogger(object):
         if self.nrow == 0:
             with open(self.fn, 'w') as f:
                 # write headers
-                self.writer = csv.DictWriter(f, dct.keys())
+                self.writer = csv.DictWriter(f, list(dct.keys()))
                 self.writer.writeheader()
         
         
@@ -48,7 +48,7 @@ class CSVLogger(object):
         if len(self.rows) % self.inevery == 0:
             #import ipdb; ipdb.set_trace()
             with open(self.fn, 'a') as f:
-                self.writer = csv.DictWriter(f, dct.keys())
+                self.writer = csv.DictWriter(f, list(dct.keys()))
                 self.writer.writerows(self.rows)
 
                 f.flush()

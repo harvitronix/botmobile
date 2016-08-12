@@ -49,7 +49,7 @@ class ReplayMemory:
   def getCurrentState(self):
     # reuse first row of prestates in minibatch to minimize memory consumption
     self.prestates[0, ...] = self.getState(self.current - 1)
-    print "getting current state of dim", self.prestates.shape
+    print("getting current state of dim", self.prestates.shape)
     return self.prestates
 
   def getMinibatch(self):

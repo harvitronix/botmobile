@@ -96,7 +96,7 @@ class Driver(object):
         state = self.getState()
         terminal = self.getTerminal()
         epsilon = self.getEpsilon()
-        print "epsilon: ", epsilon, "\treplay: ", self.model.count
+        print("epsilon: ", epsilon, "\treplay: ", self.model.count)
         if terminal or (self.enable_exploration and random.random() < epsilon):
             self.steer()
             self.speed()
@@ -181,4 +181,4 @@ class Driver(object):
         self.prev_rpm = None
 
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)

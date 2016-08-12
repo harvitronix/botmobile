@@ -96,8 +96,8 @@ class Driver(object):
         steering_action = 0
         acc_action = 0
         if random.random() < self.exploration_rate:
-            steering_action = random.choice(range(19))
-            acc_action = random.choice(range(5))
+            steering_action = random.choice(list(range(19)))
+            acc_action = random.choice(list(range(5)))
         else:
             nnet_input = np.empty((32, 24))
             nnet_input[0,:] = current_state
@@ -119,7 +119,7 @@ class Driver(object):
             self.net.train(minibatch, 0)
 
         if self.step_count %10000 == 0:
-                print "step:", self.step_count
+                print("step:", self.step_count)
         self.step_count += 1
         return wheel, acc
 
@@ -141,7 +141,7 @@ class Driver(object):
             #self.stat -= 1
         else:
             self.control.setBrake(0.0)
-        print "\r", self.stat,
+        print("\r", self.stat, end=' ')
         action_msg = self.control.toMsg()  #this is the action we take now
         #print "RETURNING ACTION MESSAGE", action_msg
         return action_msg

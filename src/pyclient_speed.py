@@ -87,18 +87,18 @@ if args.load_weights:
   net.load_weights(args.load_weights)
 
 # Print summary
-print 'Connecting to server host ip:', args.host_ip, '@ port:', args.host_port
-print 'Bot ID:', args.id
-print 'Maximum episodes:', args.max_episodes
-print 'Maximum steps:', args.max_steps
-print 'Track:', args.track
-print 'Stage:', args.stage
-print '*********************************************'
+print('Connecting to server host ip:', args.host_ip, '@ port:', args.host_port)
+print('Bot ID:', args.id)
+print('Maximum episodes:', args.max_episodes)
+print('Maximum steps:', args.max_steps)
+print('Track:', args.track)
+print('Stage:', args.stage)
+print('*********************************************')
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-except socket.error, msg:
-    print 'Could not make a socket.'
+except socket.error as msg:
+    print('Could not make a socket.')
     sys.exit(-1)
 
 # one second timeout
@@ -112,23 +112,23 @@ while not shutdownClient:
 
     # This is not the main loop, this loop just initializes communication
     while True:
-        print 'Sending id to server: ', args.id
+        print('Sending id to server: ', args.id)
         buf = args.id + agent.init()  # agent sends the angles of distance sensors
-        print 'Sending init string to server:', buf
+        print('Sending init string to server:', buf)
         
         try:
             sock.sendto(buf, (args.host_ip, args.host_port))
-        except socket.error, msg:
-            print "Failed to send data...Exiting..."
+        except socket.error as msg:
+            print("Failed to send data...Exiting...")
             sys.exit(-1)
             
         try:
             buf, addr = sock.recvfrom(1000)
-        except socket.error, msg:
-            print "didn't get response from server..."
+        except socket.error as msg:
+            print("didn't get response from server...")
     
         if buf.find('***identified***') >= 0:
-            print 'Received: ', buf
+            print('Received: ', buf)
             break
 
     # This is the main loop that sends actions
@@ -138,21 +138,21 @@ while not shutdownClient:
         buf = None
         try:
             buf, addr = sock.recvfrom(1000)
-        except socket.error, msg:
-            print "didn't get response from server..."
+        except socket.error as msg:
+            print("didn't get response from server...")
         
         if verbose:
-            print 'Received: ', buf
+            print('Received: ', buf)
         
         if buf != None and buf.find('***shutdown***') >= 0:
             agent.onShutDown()
             shutdownClient = True
-            print 'Client Shutdown'
+            print('Client Shutdown')
             break
         
         if buf != None and buf.find('***restart***') >= 0:
             agent.onRestart()
-            print 'Client Restart'
+            print('Client Restart')
             break
         
         currentStep += 1
@@ -160,19 +160,19 @@ while not shutdownClient:
             if buf != None:
                 buf = agent.drive(buf)
             else:
-                print "We were supposed to receive information to choose and action, but buffer was empty"
+                print("We were supposed to receive information to choose and action, but buffer was empty")
         # if currents steps equals max, restart the race (meta 1)
         else:
             buf = '(meta 1)'
         
         if verbose:
-            print 'Sending: ', buf
+            print('Sending: ', buf)
         
         if buf != None:
             try:
                 sock.sendto(buf, (args.host_ip, args.host_port))
-            except socket.error, msg:
-                print "Failed to send data...Exiting..."
+            except socket.error as msg:
+                print("Failed to send data...Exiting...")
                 sys.exit(-1)
 
     # When a game has ended we would like to save the current model for future generations to see

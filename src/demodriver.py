@@ -148,7 +148,7 @@ class Driver(object):
 
         # if terminal state (out of track), then restart game
         if terminal:
-            print "terminal state, restarting"
+            print("terminal state, restarting")
             self.control.setMeta(1)
             return self.control.toMsg()
         else:
@@ -211,30 +211,30 @@ class Driver(object):
                 self.algorithm = 'network'
                 self.mode = 'override'
                 self.wheel.generateForce(0)
-                print "Switched to network algorithm"
+                print("Switched to network algorithm")
             elif self.wheel.isButtonDown(event, 3):
                 self.net.load_weights(self.pretrained_network)
                 self.algorithm = 'network'
                 self.mode = 'ff'
                 self.enable_training = False
-                print "Switched to pretrained network"
+                print("Switched to pretrained network")
             elif self.wheel.isButtonDown(event, 4):
                 self.enable_training = not self.enable_training
-                print "Switched training", "ON" if self.enable_training else "OFF"
+                print("Switched training", "ON" if self.enable_training else "OFF")
             elif self.wheel.isButtonDown(event, 5):
                 self.algorithm = 'hardcoded'
                 self.mode = 'ff'
-                print "Switched to hardcoded algorithm"
+                print("Switched to hardcoded algorithm")
             elif self.wheel.isButtonDown(event, 6):
                 self.enable_exploration = not self.enable_exploration
                 self.mode = 'override'
                 self.wheel.generateForce(0)
-                print "Switched exploration", "ON" if self.enable_exploration else "OFF"
+                print("Switched exploration", "ON" if self.enable_exploration else "OFF")
             elif self.wheel.isButtonDown(event, 7):
                 self.mode = 'ff' if self.mode == 'override' else 'override'
                 if self.mode == 'override':
                     self.wheel.generateForce(0)
-                print "Switched force feedback", "ON" if self.mode == 'ff' else "OFF"
+                print("Switched force feedback", "ON" if self.mode == 'ff' else "OFF")
             elif self.wheel.isButtonDown(event, 0) or self.wheel.isButtonDown(event, 8):
                 gear = max(-1, gear - 1)
             elif self.wheel.isButtonDown(event, 1) or self.wheel.isButtonDown(event, 9):
@@ -358,4 +358,4 @@ class Driver(object):
             self.net.save_weights(self.save_weights_prefix + "_" + str(self.episode) + ".pkl")
 
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)

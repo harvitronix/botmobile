@@ -42,7 +42,7 @@ class DeepQNetwork:
       h = BatchNormalization()(x)
     else:
       h = x
-    for i in xrange(args.hidden_layers):
+    for i in range(args.hidden_layers):
       h = Dense(args.hidden_nodes, activation=args.activation)(h)
       if args.batch_norm and i != args.hidden_layers - 1:
         h = BatchNormalization()(h)
@@ -76,9 +76,9 @@ class DeepQNetwork:
     qpre = self.model.predict(prestates)
     qpost = self.target_model.predict(poststates)
 
-    for i in xrange(qpre.shape[0]):
+    for i in range(qpre.shape[0]):
       k = 0
-      for j in xrange(len(self.action_sizes)):
+      for j in range(len(self.action_sizes)):
         if terminals[i]:
           qpre[i, k + actions[i, j]] = rewards[i]
         else:
@@ -89,7 +89,7 @@ class DeepQNetwork:
 
     weights = self.model.get_weights()
     target_weights = self.target_model.get_weights()
-    for i in xrange(len(weights)):
+    for i in range(len(weights)):
       target_weights[i] = self.target_rate * weights[i] + (1 - self.target_rate) * target_weights[i]
     self.target_model.set_weights(target_weights)
 
@@ -107,4 +107,4 @@ class DeepQNetwork:
     self.model.load_weights(load_path)
 
   def save_weights(self, save_path):
-    self.model.save_weights(save_path)
+    self.model.save_weights(save_path, overwrite=True)

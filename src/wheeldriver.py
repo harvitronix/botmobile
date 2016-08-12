@@ -39,7 +39,7 @@ class Driver(object):
 
         self.joystick = pygame.joystick.Joystick(0)
         self.joystick.init()
-        print "Using joystick", self.joystick.get_name()
+        print("Using joystick", self.joystick.get_name())
         self.csv_logger = CSVLogger('states.csv')
 
 

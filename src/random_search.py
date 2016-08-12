@@ -9,8 +9,8 @@ parser.add_argument('--options', default='--gym_record')
 parser.add_argument('--label_skip', type=int, default=2)
 args, remaining_args = parser.parse_known_args()
 
-print args.trials
-for n in xrange(args.trials):
+print(args.trials)
+for n in range(args.trials):
   cmd_args = []
   for arg in remaining_args:
     if "," in arg:
@@ -32,6 +32,6 @@ for n in xrange(args.trials):
   cmd_args.append('2>&1')
   cmd_args.append('>'+label+'.log')
   cmd_args = " ".join(cmd_args)
-  print cmd_args
+  print(cmd_args)
   os.system(cmd_args)
   

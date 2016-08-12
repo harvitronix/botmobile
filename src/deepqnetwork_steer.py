@@ -124,8 +124,8 @@ class DeepQNetwork:
       if terminals[i]:
         targets[action, i] = float(rewards[i])
         if rewards[i] == -1000:
-            print "######################### action ", action, "should never be sampled again"
-        print "sampled_terminal"
+            print("######################### action ", action, "should never be sampled again")
+        print("sampled_terminal")
       else:
         targets[action, i] = float(rewards[i]) + self.discount_rate * maxpostq[i]
         #targets[i,action] = float(rewards[i]) + self.discount_rate * maxpostq[i]
@@ -137,12 +137,12 @@ class DeepQNetwork:
     deltas = self.cost.get_errors(preq, self.targets)
     assert deltas.shape == (self.num_actions, self.batch_size)
     #assert np.count_nonzero(deltas.asnumpyarray()) == 32
-    print "nonzero deltas", np.count_nonzero(deltas.asnumpyarray())
+    print("nonzero deltas", np.count_nonzero(deltas.asnumpyarray()))
 
     # calculate cost, just in case
     cost = self.cost.get_cost(preq, self.targets)
     assert cost.shape == (1,1)
-    print "cost:", cost.asnumpyarray()
+    print("cost:", cost.asnumpyarray())
 
     # clip errors
     #if self.clip_error:

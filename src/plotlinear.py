@@ -11,9 +11,9 @@ class PlotLinear:
         self.interval = interval
 
         self.lines = [None] * self.model.action_size
-        for i in xrange(self.model.action_size):
+        for i in range(self.model.action_size):
             self.lines[i] = [None] * self.model.state_size
-            for j in xrange(self.model.state_size):
+            for j in range(self.model.state_size):
                 plt.subplot(self.model.action_size, self.model.state_size, i * self.model.action_size + j + 1)
                 plt.ylabel(self.action_labels[i])
                 plt.xlabel(self.state_labels[j])
@@ -28,11 +28,11 @@ class PlotLinear:
 
     def update(self):
         if self.counter == 0:
-            for i in xrange(self.model.action_size):
-                for j in xrange(self.model.state_size):
+            for i in range(self.model.action_size):
+                for j in range(self.model.state_size):
                     coeff = self.model.coeff[j, i]
                     self.lines[i][j].set_data([-1, 1], [-coeff, coeff])
             plt.draw()
-            print "update!!!"
+            print("update!!!")
 
         self.counter = (self.counter + 1) % self.interval

@@ -26,9 +26,9 @@ class LinearModel:
     qpost = self.predict(poststates)
     assert qpost.shape == (poststates.shape[0], self.num_actions)
 
-    for i in xrange(qpre.shape[0]):
+    for i in range(qpre.shape[0]):
       k = 0
-      for j in xrange(len(self.action_sizes)):
+      for j in range(len(self.action_sizes)):
         if terminals[i]:
           qpre[i, k + actions[i, j]] = rewards[i]
         else:
@@ -68,7 +68,7 @@ class LinearModel:
 if __name__ == "__main__":
   from replay_memory2 import ReplayMemory
   mem = ReplayMemory(1000, 20, 2)
-  for i in xrange(10):
+  for i in range(10):
     mem.add(np.zeros(20), np.zeros(2), 1, np.ones(20), False)
   mdl = LinearModel(20, (19, 5), 0.99)
   mdl.train(mem.getFullbatch())
