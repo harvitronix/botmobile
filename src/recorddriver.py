@@ -76,9 +76,9 @@ class Driver(object):
                 self.control.setGear(gear)
 
         self.state.toMsg()
-        self.states.append(sum(self.state.sensors.itervalues(), []))
+        self.states.append(sum(iter(self.state.sensors.values()), []))
         msg = self.control.toMsg()
-        self.actions.append(sum(self.control.actions.itervalues(), []))
+        self.actions.append(sum(iter(self.control.actions.values()), []))
         return msg
 
     def gear(self):
@@ -108,11 +108,11 @@ class Driver(object):
         self.control.setGear(gear)
     
     def onShutDown(self):
-        print "Saving trace to", self.filename, "states:", np.shape(self.states), "actions:", np.shape(self.actions)
+        print("Saving trace to", self.filename, "states:", np.shape(self.states), "actions:", np.shape(self.actions))
         np.savez_compressed(self.filename, states = self.states, actions = self.actions)
-        print "Done"
+        print("Done")
     
     def onRestart(self):
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)
  

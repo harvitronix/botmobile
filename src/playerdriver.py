@@ -60,7 +60,7 @@ class Driver(object):
         if self.show_sensors:
             self.stats.update(self.state)
 
-        state = np.array(sum(self.state.sensors.itervalues(), []), dtype=np.float)
+        state = np.array(sum(iter(self.state.sensors.values()), []), dtype=np.float)
         state = state[self.state_fields]
         #state = self.state.getTrack()
         #state = [self.state.getAngle(), self.state.getSpeedX(), self.state.getTrackPos()]
@@ -103,4 +103,4 @@ class Driver(object):
     
     def onRestart(self):
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)

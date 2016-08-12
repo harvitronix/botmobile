@@ -110,7 +110,7 @@ class Driver(object):
         terminal = self.getTerminal()
         reward = self.getReward()
         epsilon = self.getEpsilon()
-        print "epsilon: ", epsilon, "\treward: ", reward
+        print("epsilon: ", epsilon, "\treward: ", reward)
         if terminal or (self.enable_exploration and random.random() < epsilon):
             self.steer()
             self.speed()
@@ -200,4 +200,4 @@ class Driver(object):
         self.prev_action = None
 
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)

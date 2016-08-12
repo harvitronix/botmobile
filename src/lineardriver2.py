@@ -324,7 +324,7 @@ class Driver(object):
         if self.episode > 0:
             # training
             if self.enable_training and self.mem.count > 0:
-              for i in xrange(self.repeat_train):
+              for i in range(self.repeat_train):
                 batch = self.mem.getFullbatch()
                 self.loss_sum += self.net.train(batch)
                 self.loss_steps += 1
@@ -336,8 +336,8 @@ class Driver(object):
             self.loss_sum = self.loss_steps = 0
             avgmaxQ = self.maxQ_sum / self.maxQ_steps
             self.maxQ_sum = self.maxQ_steps = 0
-            print "Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
-                "\tEpsilon:", epsilon, "\tReplay memory:", self.mem.count, "\tAverage loss:", avgloss, "\tAverage maxQ", avgmaxQ 
+            print("Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
+                "\tEpsilon:", epsilon, "\tReplay memory:", self.mem.count, "\tAverage loss:", avgloss, "\tAverage maxQ", avgmaxQ) 
 
             if self.save_weights_prefix and self.save_interval > 0 and self.episode % self.save_interval == 0:
                 self.net.save_weights(self.save_weights_prefix + "_" + str(self.episode) + ".pkl")

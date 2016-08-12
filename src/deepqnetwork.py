@@ -69,7 +69,7 @@ class DeepQNetwork:
     # create network
     init_norm = Gaussian(loc=0.0, scale=0.01)
     layers = []
-    for i in xrange(self.num_layers):
+    for i in range(self.num_layers):
         layers.append(Affine(nout=self.hidden_nodes, init=init_norm, activation=Rectlin()))
     layers.append(Affine(nout=self.num_actions, init = init_norm))
     return layers

@@ -111,7 +111,7 @@ class Driver(object):
             self.state.botcontrol = 1 - epsilon
             self.state.mancontrol = (self.control.getGear() == -1)
             self.stats.update(self.state)
-        print "epsilon: ", epsilon, "\treplay: ", self.model.count
+        print("epsilon: ", epsilon, "\treplay: ", self.model.count)
         if (self.enable_training and terminal) or self.control.getGear() == -1 or (self.enable_exploration and random.random() < epsilon):
             if terminal or self.control.getGear() == -1:
                 self.wheel.resetForce()
@@ -149,12 +149,12 @@ class Driver(object):
         accel = self.control.getAccel()
         
         if speed < self.max_speed:
-            print "speed < max_speed", speed, self.max_speed
+            print("speed < max_speed", speed, self.max_speed)
             accel += 0.1
             if accel > 1:
                 accel = 1.0
         else:
-            print "speed >= max_speed", speed, self.max_speed
+            print("speed >= max_speed", speed, self.max_speed)
             accel -= 0.1
             if accel < 0:
                 accel = 0.0
@@ -192,7 +192,7 @@ class Driver(object):
     
     def onRestart(self):
         self.episode += 1
-        print "Episode", self.episode
+        print("Episode", self.episode)
         
     def reset(self):
         self.wheel.resetForce()

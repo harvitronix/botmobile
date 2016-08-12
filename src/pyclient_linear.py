@@ -61,21 +61,21 @@ comarg.add_argument("--verbose", type=str2bool, default=False, help="Enable debu
 arguments = parser.parse_args()
 
 # Print summary
-print 'Connecting to server host ip:', arguments.host_ip, '@ port:', arguments.host_port
-print 'Bot ID:', arguments.id
-print 'Maximum episodes:', arguments.max_episodes
-print 'Maximum steps:', arguments.max_steps
-print 'Track:', arguments.track
-print 'Stage:', arguments.stage
-print '*********************************************'
+print('Connecting to server host ip:', arguments.host_ip, '@ port:', arguments.host_port)
+print('Bot ID:', arguments.id)
+print('Maximum episodes:', arguments.max_episodes)
+print('Maximum steps:', arguments.max_steps)
+print('Track:', arguments.track)
+print('Stage:', arguments.stage)
+print('*********************************************')
 
 from lineardriver2 import Driver
 driver = Driver(arguments)
 
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-except socket.error, msg:
-    print 'Could not make a socket.'
+except socket.error as msg:
+    print('Could not make a socket.')
     sys.exit(-1)
 
 # one second timeout
@@ -89,26 +89,26 @@ verbose = arguments.verbose
 while not shutdownClient:
     while True:
         if verbose:
-          print 'Sending id to server: ', arguments.id
+          print('Sending id to server: ', arguments.id)
         buf = arguments.id + driver.init()
         if verbose:
-          print 'Sending init string to server:', buf
+          print('Sending init string to server:', buf)
         
         try:
             sock.sendto(buf, (arguments.host_ip, arguments.host_port))
-        except socket.error, msg:
-            print "Failed to send data...Exiting..."
+        except socket.error as msg:
+            print("Failed to send data...Exiting...")
             sys.exit(-1)
 
             
         try:
             buf, addr = sock.recvfrom(1000)
-        except socket.error, msg:
-            print "didn't get response from server... %s" % msg
+        except socket.error as msg:
+            print("didn't get response from server... %s" % msg)
     
         if buf.find('***identified***') >= 0:
             if verbose:
-                print 'Received: ', buf
+                print('Received: ', buf)
             break
 
     currentStep = 0
@@ -118,23 +118,23 @@ while not shutdownClient:
         buf = None
         try:
             buf, addr = sock.recvfrom(1000)
-        except socket.error, msg:
-            print "didn't get response from server... %s" % msg
+        except socket.error as msg:
+            print("didn't get response from server... %s" % msg)
         
         if verbose:
-            print 'Received: ', buf
+            print('Received: ', buf)
         
         if buf != None and buf.find('***shutdown***') >= 0:
             driver.onShutDown()
             shutdownClient = True
             if verbose:
-              print 'Client Shutdown'
+              print('Client Shutdown')
             break
         
         if buf != None and buf.find('***restart***') >= 0:
             driver.onRestart()
             if verbose:
-              print 'Client Restart'
+              print('Client Restart')
             time.sleep(1)
             break
         
@@ -146,13 +146,13 @@ while not shutdownClient:
             buf = '(meta 1)'
         
         if verbose:
-            print 'Sending: ', buf
+            print('Sending: ', buf)
         
         if buf != None:
             try:
                 sock.sendto(buf, (arguments.host_ip, arguments.host_port))
-            except socket.error, msg:
-                print "Failed to send data...Exiting..."
+            except socket.error as msg:
+                print("Failed to send data...Exiting...")
                 sys.exit(-1)
     
     curEpisode += 1

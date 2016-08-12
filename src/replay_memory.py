@@ -1,5 +1,5 @@
 import numpy as np
-import cPickle as pickle
+import pickle as pickle
 import random
 import logging
 logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class ReplayMemory:
   
   def getMinibatch(self):
     # sample random indexes
-    indexes = random.sample(xrange(self.count), self.batch_size)
+    indexes = random.sample(range(self.count), self.batch_size)
 
     # NB! having index first is fastest in C-order matrices
     prestates = self.prestates[indexes]

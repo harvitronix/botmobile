@@ -70,8 +70,8 @@ if __name__ == "__main__":
   p = PlotQ(19, 5, 1)
   import time
   t0 = time.time()
-  for i in xrange(100):
+  for i in range(100):
     q = np.random.randn(24)
     p.update(q)
   t1 = time.time()
-  print "time elapsed:", t1-t0
+  print("time elapsed:", t1-t0)

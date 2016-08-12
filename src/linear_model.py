@@ -35,7 +35,7 @@ class LinearModel:
   def load(self, filename):
     self.coeff = np.load(filename)
     assert self.coeff.shape == (self.state_size + 1, self.action_size)
-    print self.coeff
+    print(self.coeff)
   
   def save(self, filename):
     np.save(filename, self.coeff)
@@ -51,11 +51,11 @@ if __name__ == "__main__":
     model = LinearModel(10, 1, 1)
     model.add((1), (1))
     model.add((2), (2))
-    print "states:", model.states
-    print "actions:", model.actions
+    print("states:", model.states)
+    print("actions:", model.actions)
     model.train()
-    print "coeff:", model.coeff
+    print("coeff:", model.coeff)
     y = model.predict((3))
-    print "predicted:", y
+    print("predicted:", y)
     assert y == (3,)
 

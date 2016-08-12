@@ -12,16 +12,16 @@ class Wheel:
 
         if sdl2.SDL_NumJoysticks() > 0:
             self.joystick = sdl2.SDL_JoystickOpen(self.joystick_nr)
-            print "Found driving wheel:", sdl2.SDL_JoystickName(self.joystick)
+            print("Found driving wheel:", sdl2.SDL_JoystickName(self.joystick))
             assert sdl2.SDL_JoystickNumAxes(self.joystick) == 3, "Wheel must have 3 axes (wheel, gas pedal, brake pedal)"
         else:
-            print "No driving wheel found"
+            print("No driving wheel found")
             self.joystick = None
 
         # Initialize force feedback
         if sdl2.SDL_NumHaptics() > 0:
             self.haptic = sdl2.SDL_HapticOpen(self.joystick_nr);
-            print "Found force feedback device:", sdl2.SDL_HapticName(self.joystick_nr)
+            print("Found force feedback device:", sdl2.SDL_HapticName(self.joystick_nr))
             support = sdl2.SDL_HapticQuery(self.haptic)
             assert support & sdl2.SDL_HAPTIC_CONSTANT, "Force feedback device must support constant force effect"
 
@@ -38,7 +38,7 @@ class Wheel:
             if support & sdl2.SDL_HAPTIC_GAIN:
                 sdl2.SDL_HapticSetGain(self.haptic, self.gain)
         else:
-            print "No force feedback device found"
+            print("No force feedback device found")
             self.haptic = None    
 
         self.wheel_axis = wheel_axis
@@ -92,15 +92,15 @@ class Wheel:
         if force > self.min_force:
             force = min(1, force)
             dir = -1
-            print "left", force
+            print("left", force)
         elif force < -self.min_force:
             force = -force
             force = min(1, force)
             dir = 1
-            print "right", force
+            print("right", force)
         else:
             dir = 0
-            print "center"
+            print("center")
 
         if dir == 0:
             level = 0

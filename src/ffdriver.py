@@ -122,7 +122,7 @@ class Driver(object):
     def generate_force(self, force):
         if force > 0.005:
             force = min(1, force)
-            print "left", force
+            print("left", force)
             dir = -1
             maxlevel = 0x7fff
             minlevel = 0x1000
@@ -130,13 +130,13 @@ class Driver(object):
         elif force < -0.005:
             force = -force
             force = min(1, force)
-            print "right", force
+            print("right", force)
             dir = 1
             maxlevel = 0x7fff
             minlevel = 0x1000
             level = minlevel + int((maxlevel - minlevel) * force)
         else:
-            print "center"
+            print("center")
             dir = 0
             level = 0
 

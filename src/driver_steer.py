@@ -124,7 +124,7 @@ class Driver(object):
             nnet_input = np.empty((32, 5))
             nnet_input[0,:] = current_state
             q_vals = self.net.predict(nnet_input)[0]
-            print "\r", q_vals,
+            print("\r", q_vals, end=' ')
             #self.ax.bar(np.array(directions)*0.366, q_vals, width=0.1)
             #self.f.canvas.draw()
             steering_action = np.argmax(q_vals)
@@ -135,7 +135,7 @@ class Driver(object):
         wheel = directions[steering_action]
         acc = [-1.0, -0.5, -0.1, 0.0, 0.1, 0.5, 1.0][acc_action]
 
-        print "\r reward", reward,
+        print("\r reward", reward, end=' ')
 
         self.mem.add(self.prev_action[0], self.prev_action[1], reward, current_state, 0)
         self.prev_action = [steering_action, acc_action]
@@ -144,7 +144,7 @@ class Driver(object):
             self.net.train(minibatch, 0)
 
         if self.step_count % 5000 == 0:
-                print "step:", self.step_count
+                print("step:", self.step_count)
         self.step_count += 1
         return wheel, acc
 
@@ -206,7 +206,7 @@ class Driver(object):
             dist = np.max([dist*0.5, -1.0])
         desired = (angle - dist)*0.5
 
-        wheel_action = min(range(len(directions)), key=lambda x: np.abs(directions[x] - desired))
+        wheel_action = min(list(range(len(directions))), key=lambda x: np.abs(directions[x] - desired))
         #print "desired is: ", desired, "closest is:", directions[wheel_action]
         #self.control.setSteer((angle - dist*0.5)/0.8)
         #print angle, dist, desired, directions[wheel_action]
@@ -232,7 +232,7 @@ class Driver(object):
             max_speed = 30
 
         if speed > np.max(self.state.track) and not np.abs(self.state.trackPos) > 1:
-            print "decreased speed, because too close to border"
+            print("decreased speed, because too close to border")
             accel += -0.1
 
         elif speed < max_speed:
@@ -248,7 +248,7 @@ class Driver(object):
             accel = 0.2
 
         possible_acc = [-1.0, -0.5, -0.1, 0.0, 0.1, 0.5, 1.0]
-        acc_action = min(range(len(possible_acc)), key=lambda x: np.abs(possible_acc[x] - accel))
+        acc_action = min(list(range(len(possible_acc))), key=lambda x: np.abs(possible_acc[x] - accel))
         #print "desired is: ", accel, "closest is:", possible_acc[acc_action]
         self.desired_acc = accel
         return acc_action

@@ -268,8 +268,8 @@ class Driver(object):
             dist = self.state.getDistRaced()
             self.distances.append(dist)
             epsilon = self.getEpsilon()
-            print "Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
-                "\tEpsilon:", epsilon, "\tReplay memory:", self.mem.count
+            print("Episode:", self.episode, "\tDistance:", dist, "\tMax:", max(self.distances), "\tMedian10:", np.median(self.distances[-10:]), \
+                "\tEpsilon:", epsilon, "\tReplay memory:", self.mem.count)
 
             if self.save_weights_prefix and self.save_interval > 0 and self.episode % self.save_interval == 0:
                 self.net.save_weights(self.save_weights_prefix + "_" + str(self.episode) + ".pkl")
