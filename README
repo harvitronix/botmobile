@@ -1,3 +1,6 @@
 This is a Python client for the Simulated Car Racing Championship 2012
 
 http://games.ws.dei.polimi.it/competitions/scr/
+
+This is a fork of @tambetm's work in building a reinforcement learning agent for Torcs. This fork uses Python3 and has several tweaks to the pydriver_duel.py script that I made over the course of trying to get it to converge.
+
