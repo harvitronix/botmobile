@@ -25,9 +25,9 @@ class Driver(object):
         self.state = carState.CarState()
         self.control = carControl.CarControl()
 
-        self.speeds = [-0.1, 0.0, 0.025, 0.05, 0.075, 0.1, 0.15, 0.2, 0.3,
-                       0.4, 0.5, 0.6, 0.8, 1]
-        self.num_inputs = 19 + 4
+        self.speeds = [0.0, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5]
+        # self.num_inputs = 19 + 4
+        self.num_inputs = 19 + 2
         self.num_speeds = len(self.speeds)
           
         self.net = DeepQNetwork(self.num_inputs, (self.num_speeds,), args)
@@ -36,7 +36,7 @@ class Driver(object):
         self.mem = ReplayMemory(args.replay_size, self.num_inputs, self.num_actions)
         self.minibatch_size = args.batch_size
 
-        self.target_speed = 85  # The speed we want to maintain without crashing.
+        self.target_speed = 70  # The speed we want to maintain without crashing.
 
         if args.load_replay:
             self.mem.load(args.load_replay)
@@ -91,8 +91,10 @@ class Driver(object):
         return self.parser.stringify({'init': self.angles})
 
     def getState(self):
+        #state = np.array(self.state.getTrack() + [self.state.getSpeedX()] +
+        #                 [self.state.getAngle()] + [self.state.getTrackPos()] +
+        #                 [self.state.getSpeedX() - self.target_speed])
         state = np.array(self.state.getTrack() + [self.state.getSpeedX()] +
-                         [self.state.getAngle()] + [self.state.getTrackPos()] +
                          [self.state.getSpeedX() - self.target_speed])
         assert state.shape == (self.num_inputs,)
         return state
@@ -105,16 +107,24 @@ class Driver(object):
             speed_diff = abs(self.target_speed - self.state.getSpeedX())
 
             # Try to get within 20 mph.
-            r_speed_diff = 20 - speed_diff
+            # r_speed_diff = 20 - speed_diff
+            if speed_diff < 1:
+                reward = 500
+            elif speed_diff < 5:
+                reward = 100
+            elif speed_diff < 20:
+                reward = 0
+            else:
+                reward = -100
 
             # Substract sideways driving.
-            r_angle = 50 * abs(self.state.getAngle())
+            # r_angle = 50 * abs(self.state.getAngle())
 
             # Subtract being off center.
-            r_track_pos = 20 * abs(self.state.getTrackPos())
+            # r_track_pos = 20 * abs(self.state.getTrackPos())
 
             # Compile it all.
-            reward = r_speed_diff - r_angle - r_track_pos
+            # reward = r_speed_diff - r_angle - r_track_pos
 
         return reward
 
