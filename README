@@ -4,3 +4,8 @@ http://games.ws.dei.polimi.it/competitions/scr/
 
 This is a fork of @tambetm's work in building a reinforcement learning agent for Torcs. This fork uses Python3 and has several tweaks to the pydriver_duel.py script that I made over the course of trying to get it to converge.
 
+To see a fairly impressive trained agent, run the following on Wheel 1:
+
+`python3 pyclient_duel.py --enable_training=false --enable_exploration=false --skip=6 --load_weights=saved_weights/both-try-3_500.pkl --learn=both`
+
+
